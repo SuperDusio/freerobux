@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SuperDusio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
   <style>
     body {
       margin: 0;
@@ -85,84 +85,148 @@
       cursor: pointer;
       border-radius: 6px;
     }
-    .flappybird {
+
+    /* Przycisk Flappy Bird */
+    #flappyToggle {
       position: fixed;
-      bottom: 10px;
-      right: 10px;
-      width: 400px;
-      height: 600px;
-      border: 3px solid #fff;
+      bottom: 20px;
+      right: 20px;
+      background-color: #00ccff;
+      color: #000;
+      border: none;
+      padding: 12px 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
       z-index: 999;
     }
+
+    /* Modal Flappy Bird */
+    #flappyModal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 600px;
+      background: #000;
+      border: 3px solid #fff;
+      z-index: 1000;
+      box-shadow: 0 0 15px #00ccff;
+    }
+
+    #flappyModal iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    #flappyModal button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: #00ccff;
+      border: none;
+      color: #000;
+      padding: 5px 10px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
     @media (max-width: 768px) {
-      .flappybird {
+      /* Ukryj przycisk Flappy Bird na małych ekranach */
+      #flappyToggle {
         display: none;
+      }
+      #flappyModal {
+        width: 90vw;
+        height: 70vh;
       }
     }
   </style>
 </head>
 <body>
-<header>
-  <div class="logo">
-    <h1>SuperDusio</h1>
-    <h2>Technik</h2>
+  <header>
+    <div class="logo">
+      <h1>SuperDusio</h1>
+      <h2>Technik</h2>
+    </div>
+    <nav>
+      <button onclick="goTo('home')">Strona główna</button>
+      <button onclick="togglePopup('discord')">Discord</button>
+      <button onclick="togglePopup('kontakt')">Kontakt</button>
+      <button onclick="togglePopup('cennik')">Cennik</button>
+      <button onclick="togglePopup('regulamin')">Regulamin</button>
+    </nav>
+  </header>
+  <main id="home">
+    <h2>Witaj na stronie SuperDusio</h2>
+    <p>Na tej stronie możesz łatwo zdobyć technika na serwer Discord. Zapoznaj się z Regulaminem i Cennikiem.</p>
+  </main>
+  <div id="discord" class="popup">
+    <h3>Discord SuperDusio</h3>
+    <p>Możesz z nim się tam zkontaktować, pytać, pisać z Community i wiele więcej.</p>
+    <button onclick="window.open('https://discord.gg/TGjHQRxr', '_blank')">Dołącz na Discord</button>
+    <button onclick="closePopups()">Zamknij</button>
   </div>
-  <nav>
-    <button onclick="goTo('home')">Strona główna</button>
-    <button onclick="togglePopup('discord')">Discord</button>
-    <button onclick="togglePopup('kontakt')">Kontakt</button>
-    <button onclick="togglePopup('cennik')">Cennik</button>
-    <button onclick="togglePopup('regulamin')">Regulamin</button>
-  </nav>
-</header>
-<main id="home">
-  <h2>Witaj na stronie SuperDusio</h2>
-  <p>Na tej stronie możesz łatwo zdobyć technika na serwer Discord. Zapoznaj się z Regulaminem i Cennikiem.</p>
-</main>
-<div id="discord" class="popup">
-  <h3>Discord SuperDusio</h3>
-  <p>Możesz z nim się tam zkontaktować, pytać, pisać z Community i wiele więcej.</p>
-  <button onclick="window.open('https://discord.gg/TGjHQRxr', '_blank')">Dołącz na Discord</button>
-  <button onclick="closePopups()">Zamknij</button>
-</div>
-<div id="kontakt" class="popup">
-  <h3>Kontakt</h3>
-  <p>Chcesz skontaktować się z SuperDusio o pomoc z botem lub chcesz żeby zrobił go dla ciebie?  
-    Wyślij wiadomość na <b>superdusio@gmail.com</b></p>
-  <button onclick="closePopups()">Zamknij</button>
-</div>
-<div id="cennik" class="popup">
-  <h3>Cennik</h3>
-  <ul>
-    <li>Bot z ticketami, weryfikacją i rekrutacją – <b>25 PSC</b></li>
-    <li>Bot z 5-10 komend – <b>25 PSC</b></li>
-    <li>Bot z 15-30 komend, rekrutacją, weryfikacją i ticketami – <b>100 PSC</b></li>
-  </ul>
-  <button onclick="closePopups()">Zamknij</button>
-</div>
-<div id="regulamin" class="popup">
-  <h3>Regulamin</h3>
-  <ul>
-    <li>Zakaz nękania, wyzywania i prowokowania</li>
-    <li>Zakaz NSFW (porno) oraz rasistowskich treści</li>
-    <li>Zakaz używania botów do łamania zasad</li>
-    <li>Zakaz podszywania się pod administrację</li>
-  </ul>
-  <button onclick="closePopups()">Zamknij</button>
-</div>
-<iframe class="flappybird" src="https://flappybird.io/" frameborder="0"></iframe>
-<script>
-  function togglePopup(id) {
-    closePopups();
-    document.getElementById(id).classList.add("show");
-  }
-  function closePopups() {
-    document.querySelectorAll('.popup').forEach(p => p.classList.remove("show"));
-  }
-  function goTo(section) {
-    document.getElementById(section).scrollIntoView({ behavior: 'smooth' });
-    closePopups();
-  }
-</script>
+  <div id="kontakt" class="popup">
+    <h3>Kontakt</h3>
+    <p>Chcesz skontaktować się z SuperDusio o pomoc z botem lub chcesz żeby zrobił go dla ciebie?  
+      Wyślij wiadomość na <b>superdusio@gmail.com</b></p>
+    <button onclick="closePopups()">Zamknij</button>
+  </div>
+  <div id="cennik" class="popup">
+    <h3>Cennik</h3>
+    <ul>
+      <li>Bot z ticketami, weryfikacją i rekrutacją – <b>25 PSC</b></li>
+      <li>Bot z 5-10 komend – <b>25 PSC</b></li>
+      <li>Bot z 15-30 komend, rekrutacją, weryfikacją i ticketami – <b>100 PSC</b></li>
+    </ul>
+    <button onclick="closePopups()">Zamknij</button>
+  </div>
+  <div id="regulamin" class="popup">
+    <h3>Regulamin</h3>
+    <ul>
+      <li>Zakaz nękania, wyzywania i prowokowania</li>
+      <li>Zakaz NSFW (porno) oraz rasistowskich treści</li>
+      <li>Zakaz używania botów do łamania zasad</li>
+      <li>Zakaz podszywania się pod administrację</li>
+    </ul>
+    <button onclick="closePopups()">Zamknij</button>
+  </div>
+
+  <!-- Przycisk Flappy Bird -->
+  <button id="flappyToggle">Zagraj w Flappy Bird</button>
+
+  <!-- Modal Flappy Bird -->
+  <div id="flappyModal">
+    <iframe src="https://flappybird.io/" frameborder="0"></iframe>
+    <button onclick="closeFlappy()">Zamknij</button>
+  </div>
+
+  <script>
+    function togglePopup(id) {
+      closePopups();
+      document.getElementById(id).classList.add("show");
+    }
+    function closePopups() {
+      document.querySelectorAll('.popup').forEach(p => p.classList.remove("show"));
+    }
+    function goTo(section) {
+      document.getElementById(section).scrollIntoView({ behavior: 'smooth' });
+      closePopups();
+    }
+
+    // Flappy Bird
+    document.getElementById('flappyToggle').addEventListener('click', function() {
+      document.getElementById('flappyModal').style.display = 'block';
+    });
+
+    function closeFlappy() {
+      document.getElementById('flappyModal').style.display = 'none';
+    }
+  </script>
 </body>
 </html>
