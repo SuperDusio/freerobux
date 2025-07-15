@@ -4,240 +4,338 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SuperDusio</title>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Press+Start+2P&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
 <style>
   /* Reset i podstawy */
   * {
     box-sizing: border-box;
   }
   body, html {
-    margin: 0; padding: 0; height: 100%;
-    font-family: 'Open Sans', sans-serif;
-    background: #fefefe;
+    margin:0; padding:0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+    background-size: cover;
     color: #222;
+    min-height: 100vh;
     overflow-x: hidden;
   }
   a {
+    color: #0078d7;
     text-decoration: none;
-    color: inherit;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  /* HEADER */
+  header {
+    background: rgba(255 255 255 / 0.95);
+    backdrop-filter: saturate(180%) blur(20px);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    position: fixed;
+    top:0; left:0; right:0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1100;
+  }
+  /* Logo */
+  .logo {
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 700;
+    font-size: 18px;
+    color: #00ccff;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+  .logo small {
+    color: #3399ff;
+    font-weight: 400;
+    font-size: 10px;
+    margin-left: 8px;
+    vertical-align: super;
   }
 
-  /* Lewa belka */
+  /* Top Nav Buttons */
+  nav.top-nav {
+    margin-left: auto;
+    display: flex;
+    gap: 15px;
+  }
+  nav.top-nav button {
+    border: none;
+    background: transparent;
+    font-weight: 600;
+    font-size: 14px;
+    color: #0078d7;
+    cursor: pointer;
+    padding: 6px 14px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+  }
+  nav.top-nav button:hover {
+    background-color: #0078d7;
+    color: #fff;
+  }
+  
+  /* Hamburger menu button */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 28px;
+    height: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+  }
+  .hamburger div {
+    width: 100%;
+    height: 3px;
+    background-color: #0078d7;
+    border-radius: 2px;
+  }
+
+  /* Left sidebar panel */
   #sidebar {
     position: fixed;
-    top: 0; left: 0; bottom: 0;
+    top: 60px;
+    left: -250px;
     width: 250px;
-    background: #0078d7;
-    color: white;
+    height: calc(100% - 60px);
+    background: white;
+    box-shadow: 2px 0 8px rgb(0 0 0 / 0.1);
+    transition: left 0.3s ease;
+    z-index: 1050;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    box-shadow: 2px 0 8px rgb(0 0 0 / 0.15);
-    z-index: 9999;
   }
-  #sidebar .logo {
+  #sidebar.active {
+    left: 0;
+  }
+  #sidebar .logo-sidebar {
     font-family: 'Press Start 2P', cursive;
-    font-size: 22px;
-    line-height: 1.1;
-    cursor: pointer;
+    font-weight: 700;
+    font-size: 20px;
+    color: #00ccff;
     margin-bottom: 30px;
     user-select: none;
   }
-  #sidebar .logo h1 {
-    margin: 0; color: #a2d1ff;
+  #sidebar .logo-sidebar small {
+    color: #3399ff;
+    font-weight: 400;
+    font-size: 12px;
+    margin-left: 8px;
+    vertical-align: super;
   }
-  #sidebar .logo h2 {
-    margin: 0; font-size: 14px; color: #5a9bd8;
-  }
-  #sidebar nav {
-    flex-grow: 1;
-  }
-  #sidebar nav button {
-    width: 100%;
-    background: transparent;
+  #sidebar button {
+    background: none;
     border: none;
-    padding: 12px 15px;
-    color: white;
-    font-weight: 600;
-    font-size: 14px;
-    text-align: left;
-    border-radius: 6px;
-    margin-bottom: 8px;
-    cursor: pointer;
-    transition: background-color 0.25s;
-  }
-  #sidebar nav button:hover, #sidebar nav button.active {
-    background-color: #005aab;
-  }
-  /* Main content obok sidebar */
-  #content {
-    margin-left: 250px;
-    padding: 40px 30px 80px;
-    min-height: 100vh;
-  }
-  /* Tytuły i paragrafy */
-  h2 {
-    font-weight: 700;
-    margin-bottom: 15px;
-  }
-  p, ul {
     font-size: 16px;
-    line-height: 1.5;
-    max-width: 700px;
+    padding: 12px 0;
+    text-align: left;
+    font-weight: 600;
+    color: #0078d7;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    transition: color 0.2s ease;
   }
-  ul {
+  #sidebar button:hover {
+    color: #004a9f;
+  }
+
+  /* MAIN content */
+  main {
+    margin-top: 60px;
+    padding: 40px 20px 80px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    background: rgba(255 255 255 / 0.9);
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgb(0 0 0 / 0.15);
+  }
+  main h2 {
+    color: #0078d7;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+  main p, main ul {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+  }
+  main ul {
     padding-left: 20px;
   }
-  ul li {
-    margin-bottom: 8px;
+  main ul li {
+    margin-bottom: 10px;
   }
 
-  /* Popup okienka - Discord, Kontakt, Cennik */
-  .popup {
+  /* Fly Bird button bottom right */
+  #flybird-button {
     position: fixed;
-    top: 20%;
-    left: 280px;
+    bottom: 20px;
+    right: 20px;
+    background: #00ccff;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    box-shadow: 0 4px 10px rgb(0 204 255 / 0.7);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1200;
+    transition: background-color 0.3s ease;
+  }
+  #flybird-button:hover {
+    background: #0088cc;
+  }
+  #flybird-button svg {
+    fill: white;
+    width: 28px;
+    height: 28px;
+  }
+  /* Fly Bird modal */
+  #flybird-modal {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
     width: 400px;
-    max-width: 90vw;
+    height: 600px;
     background: white;
-    box-shadow: 0 0 15px rgb(0 0 0 / 0.25);
     border-radius: 12px;
-    padding: 25px 30px;
-    z-index: 10000;
+    box-shadow: 0 10px 40px rgb(0 0 0 / 0.25);
     display: none;
-    color: #222;
+    flex-direction: column;
+    z-index: 1300;
   }
-  .popup.show {
-    display: block;
-  }
-  .popup h3 {
-    margin-top: 0;
-    font-weight: 700;
-    color: #0078d7;
-  }
-  .popup p, .popup ul {
-    margin-top: 10px;
-  }
-  .popup ul li {
-    margin-bottom: 6px;
-  }
-  .popup button.close-btn {
-    margin-top: 15px;
-    background: #0078d7;
+  #flybird-modal iframe {
+    flex-grow: 1;
+    border-radius: 12px 12px 0 0;
     border: none;
+  }
+  #flybird-modal header {
+    padding: 10px 15px;
+    background: #00ccff;
     color: white;
     font-weight: 700;
-    padding: 10px;
-    width: 100%;
-    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px 12px 0 0;
+  }
+  #flybird-modal header button {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: white;
     cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  .popup button.close-btn:hover {
-    background: #005aab;
-  }
-  .popup button.discord-btn {
-    background: #7289da;
-    margin-top: 15px;
-  }
-  .popup button.discord-btn:hover {
-    background: #5b6eae;
   }
 
-  /* Regulamin full screen */
-  #regulamin-full {
+  /* POPUPS for regulamin and settings */
+  #overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45);
     display: none;
+    z-index: 1250;
+  }
+
+  /* Regulamin fullscreen */
+  #regulamin-fullscreen {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background: #fff;
     overflow-y: auto;
-    padding: 40px 60px;
-    z-index: 11000;
+    padding: 60px 40px 80px 40px;
+    z-index: 1300;
+    display: none;
+    font-size: 16px;
     color: #222;
+    line-height: 1.5;
   }
-  #regulamin-full.active {
-    display: block;
-  }
-  #regulamin-full h1 {
+  #regulamin-fullscreen h1 {
     font-family: 'Press Start 2P', cursive;
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 25px;
     color: #0078d7;
-    margin-bottom: 30px;
-    font-size: 28px;
   }
-  #regulamin-full ul {
-    list-style: inside disc;
+  #regulamin-fullscreen h2 {
+    margin-top: 20px;
+    color: #005999;
   }
-  #regulamin-full ul li {
-    margin-bottom: 10px;
+  #regulamin-fullscreen p, #regulamin-fullscreen li {
+    margin-bottom: 12px;
   }
-  #regulamin-full .bottom-bar {
-    position: fixed;
-    bottom: 15px;
-    left: 15px;
-    font-size: 12px;
-    color: #555;
-    cursor: pointer;
-    user-select: none;
+  #regulamin-fullscreen ul {
+    padding-left: 20px;
   }
 
-  /* Flappybird toggle button */
-  #flappy-toggle {
+  /* Regulamin footer with small nav and logo */
+  #regulamin-footer {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #0078d7;
-    color: white;
-    padding: 12px 18px;
-    border-radius: 50px;
-    font-weight: 600;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #f0f0f0;
+    border-top: 1px solid #ddd;
+    padding: 6px 20px;
+    font-size: 13px;
+    color: #0078d7;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  #regulamin-footer .logo-small {
+    font-family: 'Press Start 2P', cursive;
+    color: #00ccff;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
     user-select: none;
-    transition: background-color 0.3s;
-    z-index: 12000;
+    font-size: 14px;
   }
-  #flappy-toggle:hover {
-    background: #005aab;
+  #regulamin-footer button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #0078d7;
+    font-weight: 600;
   }
-  #flappybird-iframe {
-    position: fixed;
-    bottom: 70px;
-    right: 20px;
-    width: 400px;
-    height: 600px;
-    border: 3px solid #0078d7;
-    border-radius: 12px;
-    display: none;
-    z-index: 12000;
-    box-shadow: 0 0 10px rgb(0 120 215 / 0.6);
+  #regulamin-footer button:hover {
+    text-decoration: underline;
   }
-  /* Ustawienia */
+
+  /* SETTINGS panel */
   #settings-panel {
     position: fixed;
-    top: 20%;
-    left: 280px;
-    width: 400px;
-    max-width: 90vw;
-    background: white;
-    box-shadow: 0 0 15px rgb(0 0 0 / 0.25);
-    border-radius: 12px;
-    padding: 25px 30px;
-    z-index: 10000;
-    display: none;
-    color: #222;
+    top: 60px;
+    right: -280px;
+    width: 280px;
+    height: calc(100% - 60px);
+    background: #f9f9f9;
+    box-shadow: -2px 0 10px rgb(0 0 0 / 0.1);
+    transition: right 0.3s ease;
+    z-index: 1050;
+    padding: 25px;
+    font-size: 14px;
+    color: #333;
+    overflow-y: auto;
   }
-  #settings-panel.show {
-    display: block;
+  #settings-panel.active {
+    right: 0;
   }
   #settings-panel h3 {
-    margin-top: 0;
     font-weight: 700;
     color: #0078d7;
+    margin-bottom: 20px;
+    font-size: 18px;
   }
   #settings-panel label {
     display: block;
-    margin: 15px 0 5px;
-    font-weight: 600;
+    margin-bottom: 10px;
   }
   #settings-panel input[type="range"] {
     width: 100%;
@@ -246,339 +344,362 @@
     transform: scale(1.3);
     margin-right: 10px;
     vertical-align: middle;
+    cursor: pointer;
   }
   #settings-panel input[type="text"] {
     width: 100%;
-    padding: 8px 10px;
-    border: 1px solid #bbb;
-    border-radius: 6px;
+    padding: 6px 8px;
+    margin-top: 6px;
+    margin-bottom: 20px;
     font-size: 14px;
   }
-  #settings-panel button.play-music {
-    margin-top: 10px;
+  #settings-panel button {
     background: #0078d7;
-    color: white;
     border: none;
-    padding: 10px;
-    width: 100%;
-    font-weight: 700;
-    border-radius: 6px;
+    color: white;
+    padding: 8px 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    border-radius: 6px;
+    font-weight: 600;
   }
-  #settings-panel button.play-music:hover {
-    background: #005aab;
-  }
-  #settings-panel .note {
-    font-size: 12px;
-    color: #555;
-    margin-top: 5px;
+  #settings-panel button:hover {
+    background: #005999;
   }
 
+  /* Responsive */
+  @media (max-width: 900px) {
+    main {
+      margin: 70px 15px 100px;
+      padding: 30px 15px;
+      border-radius: 6px;
+    }
+    #sidebar {
+      width: 200px;
+    }
+    #settings-panel {
+      width: 250px;
+    }
+    nav.top-nav button {
+      font-size: 12px;
+      padding: 5px 10px;
+    }
+  }
+  @media (max-width: 600px) {
+    .hamburger {
+      display: flex;
+    }
+    nav.top-nav {
+      display: none;
+    }
+    #sidebar {
+      top: 50px;
+      height: calc(100% - 50px);
+    }
+    #settings-panel {
+      top: 50px;
+      height: calc(100% - 50px);
+    }
+  }
 </style>
 </head>
 <body>
 
-<div id="sidebar">
-  <div class="logo" id="logo-click">
-    <h1>SuperDusio</h1>
-    <h2>Technik</h2>
-  </div>
-  <nav>
-    <button id="btn-home" class="active">Strona główna</button>
-    <button id="btn-discord">Discord</button>
-    <button id="btn-contact">Kontakt</button>
-    <button id="btn-cennik">Cennik</button>
-    <button id="btn-regulamin">Regulamin</button>
-    <button id="btn-settings">Ustawienia</button>
+<header>
+  <div class="logo" id="logo">SuperDusio Technik <small>Botów Discord</small></div>
+  <nav class="top-nav">
+    <button data-page="home">Strona Główna</button>
+    <button data-page="discord">Discord</button>
+    <button data-page="contact">Kontakt</button>
+    <button data-page="pricing">Cennik</button>
+    <button data-page="regulamin">Regulamin</button>
+    <button data-page="settings">Ustawienia</button>
   </nav>
+  <div class="hamburger" id="hamburger" aria-label="Menu" title="Menu">
+    <div></div><div></div><div></div>
+  </div>
+</header>
+
+<!-- Sidebar (left) -->
+<div id="sidebar" aria-label="Panel nawigacji">
+  <div class="logo-sidebar" id="logoSidebar">SuperDusio Technik <small>Botów Discord</small></div>
+  <button data-page="home">Strona Główna</button>
+  <button data-page="discord">Discord</button>
+  <button data-page="contact">Kontakt</button>
+  <button data-page="pricing">Cennik</button>
+  <button data-page="regulamin">Regulamin</button>
+  <button data-page="settings">Ustawienia</button>
 </div>
 
-<div id="content">
-  <h2>Witaj na SuperDusio Technik</h2>
-  <p>Witaj! To jest strona główna SuperDusio Technik Botów Discord. Znajdziesz tutaj wszystko, czego potrzebujesz do swoich botów Discord oraz usług związanych z nimi.</p>
-  <p>Skorzystaj z menu po lewej stronie, aby przejść do wybranej sekcji.</p>
-</div>
-
-<!-- Popupy -->
-<div class="popup" id="popup-discord">
-  <h3>Discord</h3>
-  <p>Dołącz do naszego Discorda, aby uzyskać pomoc i porozmawiać:</p>
-  <p><a href="https://discord.gg/example" target="_blank" rel="noopener noreferrer">https://discord.gg/example</a></p>
-  <button class="close-btn">Zamknij</button>
-</div>
-
-<div class="popup" id="popup-contact">
-  <h3>Kontakt</h3>
-  <p>Masz pytania? Napisz do nas:</p>
-  <ul>
-    <li>Email: superdusio@gmail.com</li>
-    <li>Discord: SuperDusio#1234</li>
-  </ul>
-  <button class="close-btn">Zamknij</button>
-</div>
-
-<div class="popup" id="popup-cennik">
-  <h3>Cennik</h3>
-  <ul>
-    <li>Konfiguracja bota - 50 PLN</li>
-    <li>Tworzenie bota na zamówienie - od 100 PLN</li>
-    <li>Obsługa i wsparcie - 30 PLN / godzina</li>
-  </ul>
-  <button class="close-btn">Zamknij</button>
-</div>
-
-<!-- Regulamin fullscreen -->
-<div id="regulamin-full">
-  <h1>Regulamin Sklepu Technika Botów Discord – SuperDusio</h1>
-  <p><strong>§1. Postanowienia ogólne</strong><br>
-  Regulamin określa zasady korzystania ze sklepu internetowego prowadzonego przez SuperDusio, zwanego dalej „Sprzedawcą”.<br><br>
-  Sklep umożliwia zakup usług związanych z tworzeniem, konfiguracją i obsługą botów na platformie Discord.<br><br>
-  Kontakt ze Sprzedawcą możliwy jest pod adresem e-mail: superdusio@gmail.com lub poprzez Discord: SuperDusio.<br></p>
-
-  <p><strong>§2. Oferta i ceny</strong><br>
-  Wszystkie ceny podane w sklepie nie zawierają podatku, ponieważ płatności odbywają się poprzez PaySafeCard.<br><br>
-  Opisy usług i produktów zamieszczone w sklepie stanowią zaproszenie do składania ofert, a nie ofertę w rozumieniu Kodeksu cywilnego.<br><br>
-  Sprzedawca zastrzega sobie prawo do zmiany cen oraz treści oferty.</p>
-
-  <p><strong>§3. Składanie zamówień</strong><br>
-  Zamówienia można składać poprzez formularz na stronie internetowej sklepu, mailowo lub poprzez Discord.<br><br>
-  Złożenie zamówienia oznacza zawarcie umowy między Kupującym a Sprzedawcą.<br><br>
-  Sprzedawca potwierdzi przyjęcie zamówienia w ciągu maksymalnie 48 godzin roboczych.<br><br>
-  Sprzedawca może odmówić realizacji zamówienia, jeżeli:<br>
-  <ul>
-    <li>podane dane są nieprawdziwe;</li>
-    <li>zamówienie jest sprzeczne z prawem lub regulaminem Discord;</li>
-    <li>wykonanie usługi jest niemożliwe z przyczyn technicznych.</li>
-  </ul></p>
-
-  <p><strong>§4. Realizacja usług</strong><br>
-  Termin realizacji usługi ustalany jest indywidualnie z Kupującym.<br><br>
-  Kupujący zobowiązany jest dostarczyć wszystkie informacje niezbędne do realizacji usługi (np. wymagania dotyczące bota, dostęp do serwera, tokeny – o ile to konieczne).<br><br>
-  Sprzedawca zobowiązuje się do zachowania poufności przekazanych danych.<br><br>
-  Sprzedawca nie ponosi odpowiedzialności za szkody powstałe w wyniku nieprawidłowego użytkowania botów przez Kupującego.</p>
-
-  <p><strong>§5. Płatności</strong><br>
-  Dostępna forma płatności:<br>
-  PaySafeCard (PSC).<br><br>
-  Usługi są realizowane po zaksięgowaniu płatności, chyba że strony uzgodnią inaczej.</p>
-
-  <p><strong>§6. Reklamacje</strong><br>
-  Kupujący ma prawo do złożenia reklamacji w przypadku:<br><br>
-  wadliwej realizacji usługi,<br>
-  niezgodności usługi z opisem.<br><br>
-  Reklamację należy zgłosić w ciągu 14 dni od otrzymania usługi, opisując problem i dołączając dowody (zrzuty ekranu, logi itp.).<br><br>
-  Sprzedawca rozpatrzy reklamację w ciągu 14 dni od jej otrzymania i poinformuje Kupującego o sposobie rozwiązania sprawy.</p>
-
-  <p><strong>§7. Prawo odstąpienia od umowy</strong><br>
-  W przypadku usług cyfrowych, które są realizowane na indywidualne zamówienie, Kupujący nie ma prawa odstąpienia od umowy, jeśli usługa została w pełni wykonana za jego wyraźną zgodą.<br><br>
-  W innych przypadkach Kupujący może odstąpić od umowy w terminie 14 dni, jeśli prawo mu na to pozwala.</p>
-
-  <p><strong>§8. Dane osobowe</strong><br>
-  Dane osobowe Kupujących przetwarzane są wyłącznie w celu realizacji zamówienia oraz prowadzenia rozliczeń.<br><br>
-  Administratorem danych osobowych jest SuperDusio.<br><br>
-  Szczegółowe informacje znajdują się w Polityce Prywatności.</p>
-
-  <p><strong>§9. Postanowienia końcowe</strong><br>
-  W sprawach nieuregulowanych Regulaminem zastosowanie mają przepisy prawa obowiązującego na terenie Polski.<br><br>
-  Sprzedawca zastrzega sobie prawo do zmiany Regulaminu. Zmiany obowiązują od momentu opublikowania na stronie sklepu.<br><br>
-  Regulamin wchodzi w życie z dniem publikacji na stronie sklepu.</p>
-
-  <div class="bottom-bar" id="regulamin-back">← wróć</div>
-</div>
-
-<!-- Ustawienia -->
-<div id="settings-panel">
+<!-- SETTINGS panel (right) -->
+<div id="settings-panel" aria-label="Panel ustawień">
   <h3>Ustawienia</h3>
-  <label for="brightness-range">Jasność ekranu: <span id="brightness-value">100%</span></label>
-  <input type="range" id="brightness-range" min="1" max="100" value="100" />
+  <label for="brightnessRange">Jasność strony: <span id="brightnessValue">100%</span></label>
+  <input type="range" id="brightnessRange" min="10" max="100" value="100" />
   
   <label>
-    <input type="checkbox" id="music-toggle" />
-    Muzyka włącz / wyłącz
+    <input type="checkbox" id="musicToggle" />
+    Muzyka włączona
   </label>
+
+  <label for="musicURL">URL do piosenki (mp3, youtube itp.):</label>
+  <input type="text" id="musicURL" placeholder="Wklej link tutaj..." />
+
+  <button id="playMusicBtn">Odtwórz muzykę</button>
+  <button id="stopMusicBtn" style="margin-left:10px; background:#cc3300;">Zatrzymaj muzykę</button>
   
-  <label for="music-url">Link do piosenki (mp3 / url):</label>
-  <input type="text" id="music-url" placeholder="Wklej link do muzyki..." />
-  <button class="play-music" id="play-music-btn">Odtwórz muzykę</button>
-  <div class="note">Uwaga: muzyka może nie działać na wszystkich przeglądarkach lub wymagać CORS.</div>
+  <audio id="audioPlayer" loop></audio>
 </div>
 
-<!-- Flappy Bird -->
-<button id="flappy-toggle">Gra: Flappy Bird</button>
-<iframe id="flappybird-iframe" src="https://flappybird.io/" allowfullscreen></iframe>
+<!-- Fly Bird Button -->
+<div id="flybird-button" title="Fly Bird Gra (kliknij)">
+  <svg viewBox="0 0 24 24"><path d="M5 12l5 5 10-10-1.41-1.42L10 14.17 6.41 10.59 5 12z"/></svg>
+</div>
 
-<audio id="background-music" loop></audio>
+<!-- Fly Bird Modal -->
+<div id="flybird-modal" role="dialog" aria-modal="true" aria-labelledby="flybird-title">
+  <header>
+    <div id="flybird-title">Fly Bird</div>
+    <button id="flybird-close" aria-label="Zamknij Fly Bird">&times;</button>
+  </header>
+  <iframe src="https://scratch.mit.edu/projects/650137883/embed" allowfullscreen></iframe>
+</div>
+
+<!-- Overlay -->
+<div id="overlay"></div>
+
+<!-- Regulamin fullscreen -->
+<div id="regulamin-fullscreen" role="document" tabindex="0" aria-labelledby="regulamin-title">
+  <h1 id="regulamin-title">Regulamin Sklepu Technika Botów Discord – SuperDusio</h1>
+
+  <section>
+    <h2>§1. Postanowienia ogólne</h2>
+    <p>Regulamin określa zasady korzystania ze sklepu internetowego prowadzonego przez SuperDusio, zwanego dalej „Sprzedawcą”.</p>
+    <p>Sklep umożliwia zakup usług związanych z tworzeniem, konfiguracją i obsługą botów na platformie Discord.</p>
+    <p>Kontakt ze Sprzedawcą możliwy jest pod adresem e-mail: superdusio@gmail.com lub poprzez Discord: SuperDusio.</p>
+  </section>
+
+  <section>
+    <h2>§2. Oferta i ceny</h2>
+    <p>Wszystkie ceny podane w sklepie nie zawierają podatku, ponieważ płatności odbywają się poprzez PaySafeCard.</p>
+    <p>Opisy usług i produktów zamieszczone w sklepie stanowią zaproszenie do składania ofert, a nie ofertę w rozumieniu Kodeksu cywilnego.</p>
+    <p>Sprzedawca zastrzega sobie prawo do zmiany cen oraz treści oferty.</p>
+  </section>
+
+  <section>
+    <h2>§3. Składanie zamówień</h2>
+    <p>Zamówienia można składać poprzez formularz na stronie internetowej sklepu, mailowo lub poprzez Discord.</p>
+    <p>Złożenie zamówienia oznacza zawarcie umowy między Kupującym a Sprzedawcą.</p>
+    <p>Sprzedawca potwierdzi przyjęcie zamówienia w ciągu maksymalnie 48 godzin roboczych.</p>
+    <p>Sprzedawca może odmówić realizacji zamówienia, jeżeli:</p>
+    <ul>
+      <li>podane dane są nieprawdziwe;</li>
+      <li>zamówienie jest sprzeczne z prawem lub regulaminem Discord;</li>
+      <li>wykonanie usługi jest niemożliwe z przyczyn technicznych.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>§4. Realizacja usług</h2>
+    <p>Termin realizacji usługi ustalany jest indywidualnie z Kupującym.</p>
+    <p>Kupujący zobowiązany jest dostarczyć wszystkie informacje niezbędne do realizacji usługi (np. wymagania dotyczące bota, dostęp do serwera, tokeny – o ile to konieczne).</p>
+    <p>Sprzedawca zobowiązuje się do zachowania poufności przekazanych danych.</p>
+    <p>Sprzedawca nie ponosi odpowiedzialności za szkody powstałe w wyniku nieprawidłowego użytkowania botów przez Kupującego.</p>
+  </section>
+
+  <section>
+    <h2>§5. Płatności</h2>
+    <p>Dostępna forma płatności:</p>
+    <ul><li>PaySafeCard (PSC).</li></ul>
+    <p>Usługi są realizowane po zaksięgowaniu płatności, chyba że strony uzgodnią inaczej.</p>
+  </section>
+
+  <section>
+    <h2>§6. Reklamacje</h2>
+    <p>Kupujący ma prawo do złożenia reklamacji w przypadku:</p>
+    <ul>
+      <li>wadliwej realizacji usługi,</li>
+      <li>niezgodności usługi z opisem.</li>
+    </ul>
+    <p>Reklamację należy zgłosić w ciągu 14 dni od otrzymania usługi, opisując problem i dołączając dowody (zrzuty ekranu, logi itp.).</p>
+    <p>Sprzedawca rozpatrzy reklamację w ciągu 14 dni od jej otrzymania i poinformuje Kupującego o sposobie rozwiązania sprawy.</p>
+  </section>
+
+  <section>
+    <h2>§7. Prawo odstąpienia od umowy</h2>
+    <p>Kupujący ma prawo odstąpić od umowy bez podania przyczyny w ciągu 14 dni od zawarcia umowy, chyba że usługa została już wykonana.</p>
+    <p>Odstąpienie należy zgłosić mailowo lub przez Discord.</p>
+  </section>
+
+  <section>
+    <h2>§8. Postanowienia końcowe</h2>
+    <p>W sprawach nieuregulowanych niniejszym regulaminem zastosowanie mają przepisy Kodeksu cywilnego oraz innych obowiązujących aktów prawnych.</p>
+    <p>Sprzedawca zastrzega sobie prawo do zmian regulaminu, o czym poinformuje Kupujących na stronie.</p>
+    <p>Kontakt do Sprzedawcy: superdusio@gmail.com, Discord: SuperDusio#1234.</p>
+  </section>
+
+  <div id="regulamin-footer">
+    <div class="logo-small" tabindex="0" role="button" aria-label="Powrót do strony głównej">SuperDusio Technik</div>
+    <button id="closeRegulamin" aria-label="Zamknij regulamin">Zamknij Regulamin</button>
+  </div>
+</div>
+
+<!-- Main content container -->
+<main id="main-content">
+  <h2>Witamy na stronie SuperDusio Technik</h2>
+  <p>Tworzymy i obsługujemy boty na Discorda z pasją i profesjonalizmem. Wybierz jedną z zakładek, aby poznać naszą ofertę, skontaktować się z nami lub zobaczyć regulamin.</p>
+</main>
 
 <script>
-  // Sidebar buttons i content
-  const btnHome = document.getElementById('btn-home');
-  const btnDiscord = document.getElementById('btn-discord');
-  const btnContact = document.getElementById('btn-contact');
-  const btnCennik = document.getElementById('btn-cennik');
-  const btnRegulamin = document.getElementById('btn-regulamin');
-  const btnSettings = document.getElementById('btn-settings');
-
-  const popupDiscord = document.getElementById('popup-discord');
-  const popupContact = document.getElementById('popup-contact');
-  const popupCennik = document.getElementById('popup-cennik');
+  // Elementy
+  const sidebar = document.getElementById('sidebar');
+  const hamburger = document.getElementById('hamburger');
   const settingsPanel = document.getElementById('settings-panel');
-  const regulaminFull = document.getElementById('regulamin-full');
-  const content = document.getElementById('content');
+  const flybirdButton = document.getElementById('flybird-button');
+  const flybirdModal = document.getElementById('flybird-modal');
+  const flybirdClose = document.getElementById('flybird-close');
+  const overlay = document.getElementById('overlay');
+  const regulaminFullscreen = document.getElementById('regulamin-fullscreen');
+  const closeRegulaminBtn = document.getElementById('closeRegulamin');
+  const logo = document.getElementById('logo');
+  const logoSidebar = document.getElementById('logoSidebar');
+  const mainContent = document.getElementById('main-content');
+  const brightnessRange = document.getElementById('brightnessRange');
+  const brightnessValue = document.getElementById('brightnessValue');
+  const musicToggle = document.getElementById('musicToggle');
+  const musicURLInput = document.getElementById('musicURL');
+  const playMusicBtn = document.getElementById('playMusicBtn');
+  const stopMusicBtn = document.getElementById('stopMusicBtn');
+  const audioPlayer = document.getElementById('audioPlayer');
 
-  const popups = [popupDiscord, popupContact, popupCennik, settingsPanel];
-
-  function closeAllPopups() {
-    popups.forEach(p => p.classList.remove('show'));
-  }
-  function deactivateAllButtons() {
-    [btnHome, btnDiscord, btnContact, btnCennik, btnRegulamin, btnSettings].forEach(b => b.classList.remove('active'));
-  }
-  function showContent() {
-    content.style.display = 'block';
-    regulaminFull.classList.remove('active');
-  }
-  function hideContent() {
-    content.style.display = 'none';
-  }
-
-  btnHome.addEventListener('click', () => {
-    closeAllPopups();
-    deactivateAllButtons();
-    btnHome.classList.add('active');
-    regulaminFull.classList.remove('active');
-    showContent();
+  // Toggle sidebar
+  hamburger.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
   });
 
-  btnDiscord.addEventListener('click', () => {
-    closeAllPopups();
-    deactivateAllButtons();
-    btnDiscord.classList.add('active');
-    popupDiscord.classList.add('show');
-    hideContent();
-    regulaminFull.classList.remove('active');
+  // Clicking outside sidebar closes it on mobile
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('active');
+    settingsPanel.classList.remove('active');
+    overlay.style.display = 'none';
+    regulaminFullscreen.style.display = 'none';
   });
 
-  btnContact.addEventListener('click', () => {
-    closeAllPopups();
-    deactivateAllButtons();
-    btnContact.classList.add('active');
-    popupContact.classList.add('show');
-    hideContent();
-    regulaminFull.classList.remove('active');
+  // Close regulamin
+  closeRegulaminBtn.addEventListener('click', () => {
+    regulaminFullscreen.style.display = 'none';
+    overlay.style.display = 'none';
   });
 
-  btnCennik.addEventListener('click', () => {
-    closeAllPopups();
-    deactivateAllButtons();
-    btnCennik.classList.add('active');
-    popupCennik.classList.add('show');
-    hideContent();
-    regulaminFull.classList.remove('active');
-  });
+  // Logo click resets page to home
+  logo.addEventListener('click', () => loadPage('home'));
+  logoSidebar.addEventListener('click', () => loadPage('home'));
 
-  btnRegulamin.addEventListener('click', () => {
-    closeAllPopups();
-    deactivateAllButtons();
-    btnRegulamin.classList.add('active');
-    regulaminFull.classList.add('active');
-    hideContent();
-  });
-
-  btnSettings.addEventListener('click', () => {
-    closeAllPopups();
-    deactivateAllButtons();
-    btnSettings.classList.add('active');
-    settingsPanel.classList.add('show');
-    hideContent();
-    regulaminFull.classList.remove('active');
-  });
-
-  // Close buttons for popups
-  document.querySelectorAll('.popup .close-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      closeAllPopups();
-      deactivateAllButtons();
-      btnHome.classList.add('active');
-      showContent();
-    });
-  });
-
-  // Regulamin back button
-  document.getElementById('regulamin-back').addEventListener('click', () => {
-    regulaminFull.classList.remove('active');
-    deactivateAllButtons();
-    btnHome.classList.add('active');
-    showContent();
-  });
-
-  // Logo click resets to home
-  document.getElementById('logo-click').addEventListener('click', () => {
-    closeAllPopups();
-    deactivateAllButtons();
-    btnHome.classList.add('active');
-    regulaminFull.classList.remove('active');
-    showContent();
-  });
-
-  // Flappy Bird toggle
-  const flappyToggle = document.getElementById('flappy-toggle');
-  const flappyFrame = document.getElementById('flappybird-iframe');
-
-  flappyToggle.addEventListener('click', () => {
-    if (flappyFrame.style.display === 'block') {
-      flappyFrame.style.display = 'none';
-      flappyToggle.textContent = 'Gra: Flappy Bird';
-    } else {
-      flappyFrame.style.display = 'block';
-      flappyToggle.textContent = 'Ukryj Flappy Bird';
+  // Sidebar buttons and top nav buttons event delegation
+  function navHandler(e) {
+    if(e.target.tagName !== 'BUTTON') return;
+    const page = e.target.getAttribute('data-page');
+    if(page === 'discord') {
+      window.open('https://discord.gg/SuperDusio', '_blank');
+      return;
     }
+    if(page === 'flybird') {
+      openFlyBird();
+      return;
+    }
+    if(page === 'regulamin') {
+      regulaminFullscreen.style.display = 'block';
+      overlay.style.display = 'block';
+      regulaminFullscreen.focus();
+      return;
+    }
+    if(page === 'settings') {
+      settingsPanel.classList.toggle('active');
+      overlay.style.display = settingsPanel.classList.contains('active') ? 'block' : 'none';
+      return;
+    }
+    loadPage(page);
+    sidebar.classList.remove('active');
+    settingsPanel.classList.remove('active');
+    overlay.style.display = 'none';
+  }
+
+  sidebar.addEventListener('click', navHandler);
+  document.querySelector('nav.top-nav').addEventListener('click', navHandler);
+
+  // Load page content
+  function loadPage(page) {
+    switch(page) {
+      case 'home':
+        mainContent.innerHTML = `
+          <h2>Witamy na stronie SuperDusio Technik</h2>
+          <p>Tworzymy i obsługujemy boty na Discorda z pasją i profesjonalizmem. Wybierz jedną z zakładek, aby poznać naszą ofertę, skontaktować się z nami lub zobaczyć regulamin.</p>`;
+        break;
+      case 'contact':
+        mainContent.innerHTML = `
+          <h2>Kontakt</h2>
+          <p>Masz pytania? Skontaktuj się z nami!</p>
+          <ul>
+            <li>Email: <a href="mailto:superdusio@gmail.com">superdusio@gmail.com</a></li>
+            <li>Discord: <a href="https://discord.gg/SuperDusio" target="_blank">SuperDusio</a></li>
+          </ul>`;
+        break;
+      case 'pricing':
+        mainContent.innerHTML = `
+          <h2>Cennik</h2>
+          <ul>
+            <li>Bot podstawowy – 50 zł</li>
+            <li>Bot z dodatkowymi funkcjami – 100 zł</li>
+            <li>Konfiguracja serwera – 80 zł</li>
+            <li>Wsparcie techniczne – od 30 zł/h</li>
+          </ul>`;
+        break;
+      default:
+        mainContent.innerHTML = `<h2>Strona nie znaleziona</h2><p>Wybrana strona nie istnieje.</p>`;
+    }
+  }
+
+  // Fly Bird modal open/close
+  flybirdButton.addEventListener('click', openFlyBird);
+  flybirdClose.addEventListener('click', () => {
+    flybirdModal.style.display = 'none';
   });
 
-  // Settings panel logic - brightness, music
-  const brightnessRange = document.getElementById('brightness-range');
-  const brightnessValue = document.getElementById('brightness-value');
-  const musicToggle = document.getElementById('music-toggle');
-  const musicUrlInput = document.getElementById('music-url');
-  const playMusicBtn = document.getElementById('play-music-btn');
-  const bgMusic = document.getElementById('background-music');
+  function openFlyBird() {
+    flybirdModal.style.display = 'flex';
+  }
 
-  // Jasność ekranu
+  // Brightness slider effect
   brightnessRange.addEventListener('input', () => {
     const val = brightnessRange.value;
     brightnessValue.textContent = val + '%';
     document.body.style.filter = `brightness(${val}%)`;
   });
 
-  // Muzyka toggle
-  musicToggle.addEventListener('change', () => {
-    if (musicToggle.checked) {
-      const url = musicUrlInput.value.trim();
-      if (url) {
-        bgMusic.src = url;
-        bgMusic.play().catch(() => alert('Nie można odtworzyć muzyki. Sprawdź link i ustawienia przeglądarki.'));
-      } else {
-        alert('Wprowadź link do muzyki!');
-        musicToggle.checked = false;
-      }
-    } else {
-      bgMusic.pause();
-    }
-  });
-
-  // Play music button
+  // Music player
   playMusicBtn.addEventListener('click', () => {
-    const url = musicUrlInput.value.trim();
-    if (!url) {
-      alert('Wprowadź link do muzyki!');
+    const url = musicURLInput.value.trim();
+    if(!url) {
+      alert('Podaj poprawny URL do muzyki!');
       return;
     }
-    bgMusic.src = url;
-    bgMusic.play().catch(() => alert('Nie można odtworzyć muzyki. Sprawdź link i ustawienia przeglądarki.'));
-    musicToggle.checked = true;
+    audioPlayer.src = url;
+    audioPlayer.play().catch(() => alert('Nie można odtworzyć podanego URL.'));
+  });
+  stopMusicBtn.addEventListener('click', () => {
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0;
   });
 
-</script>
+  musicToggle.addEventListener('change', () => {
+    if(musicToggle.checked) {
+      audioPlayer.play();
+    } else {
+      audioPlayer.pause();
+    }
+  });
 
+  // Inicjalizacja
+  loadPage('home');
+</script>
 </body>
 </html>
