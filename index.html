@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SuperDusio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brightness: 100%;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      filter: brightness(var(--brightness));
+      transition: filter 0.3s;
+      overflow-x: hidden;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+    .logo {
+      font-family: 'Press Start 2P', cursive;
+      line-height: 1.2;
+      margin-right: auto;
+      cursor: pointer;
+    }
+    .logo h1 {
+      font-size: 18px;
+      color: #00ccff;
+      margin: 0;
+    }
+    .logo h2 {
+      font-size: 14px;
+      color: #3399ff;
+      margin: 0;
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+    nav button {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    nav button:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    main section {
+      display: none;
+      padding: 40px;
+      background-color: rgba(0,0,0,0.5);
+      text-align: center;
+    }
+    main section.active {
+      display: block;
+    }
+    .popup, .regulamin-full {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.95);
+      color: #00ccff;
+      overflow-y: auto;
+      display: none;
+      z-index: 999;
+      padding: 30px;
+    }
+    .popup.show, .regulamin-full.show {
+      display: block;
+    }
+    .popup-content {
+      background: rgba(0,0,0,0.7);
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: 50px auto;
+    }
+    .popup-content label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    .popup-content input[type="range"] {
+      width: 100%;
+    }
+    .popup-content input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 10px;
+    }
+    .popup-content button {
+      margin-top: 10px;
+      background-color: #00ccff;
+      color: black;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    .bottom-nav {
+      position: fixed;
+      bottom: 5px;
+      left: 5px;
+      font-size: 10px;
+      color: #00ccff;
+      display: flex;
+      gap: 10px;
+    }
+    .bottom-nav button {
+      font-size: 10px;
+      padding: 5px 10px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo" onclick="window.location.reload()">
+    <h1>SuperDusio</h1>
+    <h2>Technik</h2>
+  </div>
+  <nav id="topNav">
+    <button onclick="showSection('home')">Strona Główna</button>
+    <button onclick="showSection('discord')">Discord</button>
+    <button onclick="showSection('kontakt')">Kontakt</button>
+    <button onclick="showSection('cennik')">Cennik</button>
+    <button onclick="showRegulamin()">Regulamin</button>
+    <button onclick="togglePopup()">Ustawienia</button>
+  </nav>
+</header>
+
+<main>
+  <section id="home" class="active">
+    <h2>Witaj na stronie SuperDusio!</h2>
+    <p>Na tej stronie możesz łatwo zdobyć technika na serwer Discord. Zapoznaj się z Regulaminem i Cennikiem.</p>
+  </section>
+  <section id="discord">
+    <h2>Discord SuperDusio</h2>
+    <p>Możesz się tam skontaktować, pytać, pisać z Community i wiele więcej.</p>
+    <button onclick="window.open('https://discord.gg/TGjHQRxr', '_blank')">Dołącz na Discord</button>
+  </section>
+  <section id="kontakt">
+    <h2>Kontakt</h2>
+    <p>Chcesz skontaktować się z SuperDusio o pomoc z botem lub chcesz żeby zrobił go dla Ciebie?  
+    Wyślij wiadomość na <b>superdusio@gmail.com</b>.</p>
+  </section>
+  <section id="cennik">
+    <h2>Cennik</h2>
+    <ul>
+      <li>Bot z ticketami, weryfikacją i rekrutacją – <b>25 PSC</b></li>
+      <li>Bot z 5-10 komend – <b>25 PSC</b></li>
+      <li>Bot z 15-30 komend, rekrutacją, weryfikacją i ticketami – <b>100 PSC</b></li>
+    </ul>
+  </section>
+</main>
+
+<!-- Ustawienia -->
+<div class="popup" id="settingsPopup">
+  <div class="popup-content">
+    <h3>Ustawienia</h3>
+    <label for="brightness">Jasność (1% - 100%)</label>
+    <input type="range" id="brightness" min="1" max="100" value="100">
+    <label for="musicToggle">Muzyka</label>
+    <button id="musicToggle">Wyłącz muzykę</button>
+    <label for="musicUrl">URL do muzyki</label>
+    <input type="text" id="musicUrl" placeholder="Wklej link do mp3 lub YouTube">
+    <button onclick="setMusic()">Odtwórz muzykę z linku</button>
+    <button onclick="togglePopup()">Zamknij</button>
+  </div>
+</div>
+
+<audio id="backgroundMusic" loop autoplay>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Regulamin -->
+<div class="regulamin-full" id="regulaminFull">
+  <header>
+    <div class="logo" onclick="window.location.reload()">
+      <h1>SuperDusio</h1>
+      <h2>Technik</h2>
+    </div>
+  </header>
+  <div style="padding: 20px; max-width: 900px; margin: auto;">
+    <h2>Regulamin Sklepu Technika Botów Discord – SuperDusio</h2>
+    <p><b>§1. Postanowienia ogólne</b><br>
+      Regulamin określa zasady korzystania ze sklepu internetowego prowadzonego przez SuperDusio...</p>
+    <p><b>§2. Oferta i ceny</b><br>
+      Wszystkie ceny podane w sklepie nie zawierają podatku...</p>
+    <p><b>§3. Składanie zamówień</b><br>
+      Zamówienia można składać poprzez formularz...</p>
+    <p><b>§4. Realizacja usług</b><br>
+      Termin realizacji ustalany indywidualnie...</p>
+    <p><b>§5. Płatności</b><br>
+      Dostępna forma płatności: PaySafeCard (PSC)...</p>
+    <p><b>§6. Reklamacje</b><br>
+      Kupujący ma prawo do złożenia reklamacji...</p>
+    <p><b>§7. Prawo odstąpienia od umowy</b><br>
+      W przypadku usług cyfrowych...</p>
+    <p><b>§8. Dane osobowe</b><br>
+      Dane osobowe przetwarzane są wyłącznie w celu realizacji zamówienia...</p>
+    <p><b>§9. Postanowienia końcowe</b><br>
+      W sprawach nieuregulowanych regulaminem...</p>
+  </div>
+  <div class="bottom-nav">
+    <button onclick="hideRegulamin(); showSection('home')">Strona Główna</button>
+    <button onclick="hideRegulamin(); showSection('discord')">Discord</button>
+    <button onclick="hideRegulamin(); showSection('kontakt')">Kontakt</button>
+    <button onclick="hideRegulamin(); showSection('cennik')">Cennik</button>
+    <button onclick="hideRegulamin(); togglePopup()">Ustawienia</button>
+  </div>
+</div>
+
+<script>
+  function showSection(sectionId) {
+    document.querySelectorAll('main section').forEach(sec => sec.classList.remove('active'));
+    document.getElementById(sectionId).classList.add('active');
+    document.getElementById('regulaminFull').classList.remove('show');
+  }
+
+  function showRegulamin() {
+    document.querySelectorAll('main section').forEach(sec => sec.classList.remove('active'));
+    document.getElementById('regulaminFull').classList.add('show');
+  }
+
+  function hideRegulamin() {
+    document.getElementById('regulaminFull').classList.remove('show');
+  }
+
+  function togglePopup() {
+    document.getElementById('settingsPopup').classList.toggle('show');
+  }
+
+  document.getElementById('brightness').addEventListener('input', function() {
+    document.documentElement.style.setProperty('--brightness', this.value + '%');
+  });
+
+  const music = document.getElementById('backgroundMusic');
+  let musicOn = true;
+  document.getElementById('musicToggle').addEventListener('click', () => {
+    musicOn = !musicOn;
+    if (musicOn) {
+      music.play();
+      document.getElementById('musicToggle').textContent = "Wyłącz muzykę";
+    } else {
+      music.pause();
+      document.getElementById('musicToggle').textContent = "Włącz muzykę";
+    }
+  });
+
+  function setMusic() {
+    const url = document.getElementById('musicUrl').value;
+    if (url) {
+      music.src = url;
+      music.play();
+    }
+  }
+</script>
+
+</body>
+</html>
