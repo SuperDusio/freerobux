@@ -1,367 +1,230 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SuperDusio Technik</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-<style>
-  /* Reset i podstawy */
-  * {
-    box-sizing: border-box;
-  }
-  body, html {
-    margin: 0; padding: 0; height: 100%;
-    font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #1f2937 0%, #3b82f6 100%);
-    color: #111827;
-    transition: background-color 0.3s, color 0.3s;
-    overflow-x: hidden;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SuperDusio Technik</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  /* Jasny i ciemny tryb */
-  body.dark {
-    background: linear-gradient(135deg, #111827 0%, #1e3a8a 100%);
-    color: #e0e7ff;
-  }
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #f9fafb;
+      color: #1f2937;
+      transition: background 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-  button {
-    cursor: pointer;
-    border: none;
-    border-radius: 6px;
-    padding: 10px 18px;
-    font-weight: 600;
-    font-size: 15px;
-    transition: background-color 0.25s ease;
-  }
-  button:focus {
-    outline: 2px solid #2563eb;
-    outline-offset: 2px;
-  }
+    header {
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
 
-  /* Góra pasek */
-  header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: 60px;
-    background: #fff;
-    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
-    display: flex;
-    align-items: center;
-    padding: 0 24px;
-    z-index: 999;
-  }
-  body.dark header {
-    background: #1f2937;
-    box-shadow: 0 2px 12px rgb(255 255 255 / 0.15);
-  }
+    header #logo {
+      font-weight: bold;
+      font-size: 20px;
+      cursor: pointer;
+    }
 
-  /* Logo i hamburger */
-  #hamburger {
-    font-size: 26px;
-    margin-right: 20px;
-    color: #3b82f6;
-    background: none;
-  }
-  body.dark #hamburger {
-    color: #93c5fd;
-  }
-  #logo {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 20px;
-    color: #3b82f6;
-    user-select: none;
-  }
-  body.dark #logo {
-    color: #93c5fd;
-  }
-  #logo:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
+    nav button {
+      background: none;
+      border: none;
+      font-size: 16px;
+      margin-left: 15px;
+      cursor: pointer;
+      color: #374151;
+    }
 
-  /* Prawa nawigacja */
-  nav {
-    margin-left: auto;
-    display: flex;
-    gap: 16px;
-  }
-  nav button {
-    background-color: #3b82f6;
-    color: white;
-  }
-  nav button:hover {
-    background-color: #2563eb;
-  }
-  body.dark nav button {
-    background-color: #93c5fd;
-    color: #1f2937;
-  }
-  body.dark nav button:hover {
-    background-color: #60a5fa;
-  }
+    nav button:hover {
+      color: #2563eb;
+    }
 
-  /* Lewa wysuwana belka */
-  #sidebar {
-    position: fixed;
-    top: 60px;
-    left: -280px;
-    width: 280px;
-    height: calc(100% - 60px);
-    background: #fff;
-    box-shadow: 3px 0 10px rgb(0 0 0 / 0.1);
-    padding: 24px;
-    transition: left 0.3s ease;
-    overflow-y: auto;
-    z-index: 998;
-  }
-  body.dark #sidebar {
-    background: #111827;
-    box-shadow: 3px 0 12px rgb(255 255 255 / 0.1);
-  }
-  #sidebar.show {
-    left: 0;
-  }
-  #sidebar #sidebar-logo {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 18px;
-    color: #3b82f6;
-    margin-bottom: 24px;
-  }
-  body.dark #sidebar #sidebar-logo {
-    color: #93c5fd;
-  }
-  #sidebar button {
-    width: 100%;
-    margin-bottom: 12px;
-    background-color: #3b82f6;
-    color: white;
-    font-size: 16px;
-    padding: 14px 12px;
-    font-weight: 700;
-  }
-  #sidebar button:hover {
-    background-color: #2563eb;
-  }
-  body.dark #sidebar button {
-    background-color: #93c5fd;
-    color: #1f2937;
-  }
-  body.dark #sidebar button:hover {
-    background-color: #60a5fa;
-  }
+    #hamburger {
+      display: none;
+      font-size: 24px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #374151;
+    }
 
-  /* Main content */
-  main {
-    margin-top: 60px;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 40px 20px;
-    background: rgba(255 255 255 / 0.9);
-    border-radius: 10px;
-    box-shadow: 0 12px 20px rgb(0 0 0 / 0.15);
-    color: #111827;
-  }
-  body.dark main {
-    background: rgba(31 41 55 / 0.9);
-    color: #e0e7ff;
-    box-shadow: 0 12px 24px rgb(147 197 253 / 0.5);
-  }
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+      #hamburger {
+        display: block;
+      }
+    }
 
-  main h2 {
-    font-weight: 700;
-    font-size: 32px;
-    margin-bottom: 16px;
-  }
-  main p {
-    font-size: 18px;
-    line-height: 1.5;
-  }
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background: #ffffff;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+      padding: 20px;
+      transition: left 0.3s ease;
+      z-index: 100;
+    }
 
-  /* Popup overlay - regulamin fullscreen */
-  #regulaminOverlay {
-    display: none;
-    position: fixed;
-    z-index: 1500;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: #fff;
-    overflow-y: auto;
-    padding: 40px 30px 60px;
-  }
-  body.dark #regulaminOverlay {
-    background: #111827;
-    color: #e0e7ff;
-  }
-  #regulaminOverlay.show {
-    display: block;
-  }
+    #sidebar.show {
+      left: 0;
+    }
 
-  /* Regulamin content */
-  #regulaminOverlay h1 {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 26px;
-    color: #3b82f6;
-    margin-bottom: 20px;
-  }
-  #regulaminOverlay h2 {
-    margin-top: 20px;
-    margin-bottom: 8px;
-    font-weight: 700;
-    color: #2563eb;
-  }
-  #regulaminOverlay p, #regulaminOverlay ul, #regulaminOverlay li {
-    font-size: 16px;
-    line-height: 1.6;
-  }
-  #regulaminOverlay ul {
-    padding-left: 20px;
-  }
+    #sidebar-logo {
+      font-weight: bold;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
 
-  /* Regulamin bottom small nav */
-  #regulaminNav {
-    position: fixed;
-    bottom: 8px;
-    left: 8px;
-    font-size: 12px;
-    color: #6b7280;
-  }
-  #regulaminNav button {
-    background: none;
-    border: none;
-    color: #2563eb;
-    font-weight: 600;
-    margin-right: 16px;
-    cursor: pointer;
-  }
-  body.dark #regulaminNav button {
-    color: #60a5fa;
-  }
+    #sidebar button {
+      display: block;
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 10px 0;
+      text-align: left;
+      font-size: 16px;
+      color: #374151;
+      cursor: pointer;
+    }
 
-  /* FlappyBird button bottom right */
-  #flappyToggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #3b82f6;
-    color: white;
-    border-radius: 50%;
-    width: 56px;
-    height: 56px;
-    font-size: 28px;
-    box-shadow: 0 6px 10px rgb(0 0 0 / 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1600;
-    user-select: none;
-    transition: background-color 0.25s ease;
-  }
-  #flappyToggle:hover {
-    background-color: #2563eb;
-  }
-  body.dark #flappyToggle {
-    background-color: #93c5fd;
-    color: #1f2937;
-  }
-  body.dark #flappyToggle:hover {
-    background-color: #60a5fa;
-  }
+    #sidebar button:hover {
+      color: #2563eb;
+    }
 
-  /* FlappyBird iframe popup */
-  #flappyPopup {
-    display: none;
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    width: 360px;
-    height: 600px;
-    border: 3px solid #3b82f6;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgb(0 0 0 / 0.3);
-    z-index: 1650;
-    overflow: hidden;
-    background: white;
-  }
-  body.dark #flappyPopup {
-    border-color: #93c5fd;
-    background: #1f2937;
-  }
-  #flappyPopup iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-  #flappyPopup.show {
-    display: block;
-  }
+    main {
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
 
-  /* Settings panel */
-  #settingsPanel {
-    position: fixed;
-    top: 60px;
-    right: -360px;
-    width: 360px;
-    height: calc(100% - 60px);
-    background: #fff;
-    box-shadow: -3px 0 10px rgb(0 0 0 / 0.1);
-    padding: 24px;
-    transition: right 0.3s ease;
-    overflow-y: auto;
-    z-index: 1400;
-  }
-  body.dark #settingsPanel {
-    background: #111827;
-  }
-  #settingsPanel.show {
-    right: 0;
-  }
-  #settingsPanel h3 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-weight: 700;
-    color: #2563eb;
-  }
-  #settingsPanel label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-  }
-  #settingsPanel input[type="range"] {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  #settingsPanel input[type="url"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-  }
-  #settingsPanel button {
-    width: 100%;
-  }
+    footer {
+      text-align: center;
+      margin: 40px 0 20px;
+      font-size: 14px;
+      color: #6b7280;
+    }
 
-  /* Footer */
-  footer {
-    text-align: center;
-    margin: 40px 0 20px;
-    font-size: 14px;
-    color: #6b7280;
-  }
-  body.dark footer {
-    color: #9ca3af;
-  }
-</style>
+    /* Regulamin overlay */
+    #regulaminOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      overflow-y: auto;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 200;
+      padding: 0;
+    }
+
+    #regulaminOverlay.show {
+      transform: translateX(0);
+    }
+
+    #regulaminOverlay header {
+      position: sticky;
+      top: 0;
+      background: #ffffff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    #regulaminOverlay main {
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    #regulaminOverlay button {
+      background: #2563eb;
+      border: none;
+      color: #ffffff;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #regulaminOverlay button:hover {
+      background: #1d4ed8;
+    }
+
+    /* Settings panel */
+    #settingsPanel {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      z-index: 300;
+      width: 90%;
+      max-width: 400px;
+      transition: transform 0.3s ease;
+    }
+
+    #settingsPanel.show {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    #settingsPanel label {
+      display: block;
+      margin-bottom: 8px;
+      color: #374151;
+    }
+
+    #settingsPanel input[type="range"],
+    #settingsPanel input[type="url"],
+    #settingsPanel button {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    #settingsPanel input[type="range"] {
+      appearance: none;
+      height: 6px;
+      background: #e5e7eb;
+      border-radius: 3px;
+    }
+
+    #settingsPanel input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #2563eb;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+  </style>
 </head>
 <body>
 
 <header>
-  <button id="hamburger" aria-label="Otwórz menu">&#9776;</button>
+  <button id="hamburger">&#9776;</button>
   <div id="logo">SuperDusio Technik</div>
   <nav>
     <button id="btnHome">Strona Główna</button>
@@ -372,7 +235,7 @@
   </nav>
 </header>
 
-<div id="sidebar" aria-label="Menu boczne">
+<div id="sidebar">
   <div id="sidebar-logo">SuperDusio Technik</div>
   <button id="sbHome">Strona Główna</button>
   <button id="sbCennik">Cennik</button>
@@ -386,98 +249,64 @@
   <p>Tu umieść treść główną strony, opis usług, nowości i inne ważne informacje.</p>
 </main>
 
-<!-- Regulamin fullscreen overlay -->
-<div id="regulaminOverlay" role="dialog" aria-modal="true" aria-labelledby="regTitle">
-  <h1 id="regTitle">Regulamin Sklepu Technika Botów Discord – SuperDusio</h1>
-  <p>§1. Postanowienia ogólne<br>
-  Regulamin określa zasady korzystania ze sklepu internetowego prowadzonego przez SuperDusio, zwanego dalej „Sprzedawcą”.</p>
-  <p>Sklep umożliwia zakup usług związanych z tworzeniem, konfiguracją i obsługą botów na platformie Discord.</p>
-  <p>Kontakt ze Sprzedawcą możliwy jest pod adresem e-mail: superdusio@gmail.com lub poprzez Discord: SuperDusio.</p>
+<div id="regulaminOverlay">
+  <header>
+    <button id="hamburgerReg">&#9776;</button>
+    <div>SuperDusio Technik</div>
+    <button id="closeRegulamin">Wyjdź</button>
+  </header>
+  <main>
+    <h1>Regulamin Sklepu Technika Botów Discord – SuperDusio</h1>
+    <p>§1. Postanowienia ogólne<br>
+      Regulamin określa zasady korzystania ze sklepu internetowego prowadzonego przez SuperDusio, zwanego dalej „Sprzedawcą”.
+    </p>
+    <p>Sklep umożliwia zakup usług związanych z tworzeniem, konfiguracją i obsługą botów na platformie Discord.</p>
+    <p>Kontakt ze Sprzedawcą możliwy jest pod adresem e-mail: superdusio@gmail.com lub poprzez Discord: SuperDusio.</p>
 
-  <h2>§2. Oferta i ceny</h2>
-  <p>Wszystkie ceny podane w sklepie nie zawierają podatku, ponieważ płatności odbywają się poprzez PaySafeCard.</p>
-  <p>Opisy usług i produktów zamieszczone w sklepie stanowią zaproszenie do składania ofert, a nie ofertę w rozumieniu Kodeksu cywilnego.</p>
-  <p>Sprzedawca zastrzega sobie prawo do zmiany cen oraz treści oferty.</p>
+    <h2>§2. Oferta i ceny</h2>
+    <p>Wszystkie ceny podane w sklepie nie zawierają podatku, ponieważ płatności odbywają się poprzez PaySafeCard.</p>
+    <p>Opisy usług i produktów zamieszczone w sklepie stanowią zaproszenie do składania ofert, a nie ofertę w rozumieniu Kodeksu cywilnego.</p>
 
-  <h2>§3. Składanie zamówień</h2>
-  <p>Zamówienia można składać poprzez formularz na stronie internetowej sklepu, mailowo lub poprzez Discord.</p>
-  <p>Złożenie zamówienia oznacza zawarcie umowy między Kupującym a Sprzedawcą.</p>
-  <p>Sprzedawca potwierdzi przyjęcie zamówienia w ciągu maksymalnie 48 godzin roboczych.</p>
-  <p>Sprzedawca może odmówić realizacji zamówienia, jeżeli:</p>
-  <ul>
-    <li>podane dane są nieprawdziwe;</li>
-    <li>zamówienie jest sprzeczne z prawem lub regulaminem Discord;</li>
-    <li>wykonanie usługi jest niemożliwe z przyczyn technicznych.</li>
-  </ul>
+    <h2>§3. Składanie zamówień</h2>
+    <p>Zamówienia można składać poprzez formularz na stronie internetowej sklepu, mailowo lub poprzez Discord.</p>
 
-  <h2>§4. Realizacja usług</h2>
-  <p>Termin realizacji usługi ustalany jest indywidualnie z Kupującym.</p>
-  <p>Kupujący zobowiązany jest dostarczyć wszystkie informacje niezbędne do realizacji usługi (np. wymagania dotyczące bota, dostęp do serwera, tokeny – o ile to konieczne).</p>
-  <p>Sprzedawca zobowiązuje się do zachowania poufności przekazanych danych.</p>
-  <p>Sprzedawca nie ponosi odpowiedzialności za szkody powstałe w wyniku nieprawidłowego użytkowania botów przez Kupującego.</p>
+    <h2>§4. Realizacja usług</h2>
+    <p>Termin realizacji usługi ustalany jest indywidualnie z Kupującym.</p>
 
-  <h2>§5. Płatności</h2>
-  <p>Dostępna forma płatności:</p>
-  <ul>
-    <li>PaySafeCard (PSC).</li>
-  </ul>
-  <p>Usługi są realizowane po zaksięgowaniu płatności, chyba że strony uzgodnią inaczej.</p>
+    <h2>§5. Płatności</h2>
+    <p>Dostępna forma płatności:</p>
+    <ul>
+      <li>PaySafeCard (PSC)</li>
+    </ul>
 
-  <h2>§6. Reklamacje</h2>
-  <p>Kupujący ma prawo do złożenia reklamacji w przypadku:</p>
-  <ul>
-    <li>wadliwej realizacji usługi,</li>
-    <li>niezgodności usługi z opisem.</li>
-  </ul>
-  <p>Reklamację należy zgłosić w ciągu 14 dni od otrzymania usługi, opisując problem i dołączając dowody (zrzuty ekranu, logi itp.).</p>
-  <p>Sprzedawca rozpatrzy reklamację w ciągu 14 dni od jej otrzymania i poinformuje Kupującego o sposobie rozwiązania sprawy.</p>
+    <h2>§6. Reklamacje</h2>
+    <p>Kupujący ma prawo do złożenia reklamacji w przypadku wadliwej realizacji usługi.</p>
 
-  <h2>§7. Prawo odstąpienia od umowy</h2>
-  <p>W przypadku usług cyfrowych, które są realizowane na indywidualne zamówienie, Kupujący nie ma prawa odstąpienia od umowy, jeśli usługa została w pełni wykonana za jego wyraźną zgodą.</p>
-  <p>W innych przypadkach Kupujący może odstąpić od umowy w terminie 14 dni, jeśli prawo mu na to pozwala.</p>
+    <h2>§7. Prawo odstąpienia</h2>
+    <p>W przypadku usług cyfrowych, które są realizowane na indywidualne zamówienie, Kupujący nie ma prawa odstąpienia od umowy.</p>
 
-  <h2>§8. Dane osobowe</h2>
-  <p>Dane osobowe Kupujących przetwarzane są wyłącznie w celu realizacji zamówienia oraz prowadzenia rozliczeń.</p>
-  <p>Administratorem danych osobowych jest SuperDusio.</p>
-  <p>Szczegółowe informacje znajdują się w Polityce Prywatności.</p>
-
-  <h2>§9. Postanowienia końcowe</h2>
-  <p>W sprawach nieuregulowanych Regulaminem zastosowanie mają przepisy prawa obowiązującego na terenie Polski.</p>
-  <p>Sprzedawca zastrzega sobie prawo do zmiany Regulaminu. Zmiany obowiązują od momentu opublikowania na stronie sklepu.</p>
-  <p>Regulamin wchodzi w życie z dniem publikacji na stronie sklepu.</p>
-
-  <div id="regulaminNav">
-    <button id="closeRegulamin">Wyjdź z regulaminu</button>
-  </div>
+    <h2>§8. Dane osobowe</h2>
+    <p>Dane osobowe Kupujących przetwarzane są wyłącznie w celu realizacji zamówienia.</p>
+  </main>
 </div>
 
-<!-- FlappyBird toggle button -->
-<button id="flappyToggle" aria-label="Pokaż Flappy Bird">🐦</button>
-<div id="flappyPopup" role="dialog" aria-modal="true">
-  <iframe src="https://flappybird.io" title="Flappy Bird"></iframe>
-</div>
-
-<!-- Settings panel -->
-<div id="settingsPanel" aria-label="Ustawienia">
+<div id="settingsPanel">
   <h3>Ustawienia</h3>
-  <label for="brightnessRange">Jasność tła (%)</label>
+  <label for="brightnessRange">Jasność (1%-100%)</label>
   <input type="range" id="brightnessRange" min="1" max="100" value="100" />
-  
-  <label for="darkModeToggle">Tryb ciemny</label>
-  <input type="checkbox" id="darkModeToggle" />
-  
+
   <label for="musicURL">Link do muzyki (mp3 URL)</label>
-  <input type="url" id="musicURL" placeholder="Wklej URL tutaj..." />
-  
+  <input type="url" id="musicURL" placeholder="Wklej link..." />
+
   <button id="musicToggle">Włącz / Wyłącz muzykę</button>
 </div>
 
 <footer>© 2025 SuperDusio Technik. Wszelkie prawa zastrzeżone.</footer>
 
 <script>
-  // Elementy
   const sidebar = document.getElementById('sidebar');
   const hamburger = document.getElementById('hamburger');
+  const hamburgerReg = document.getElementById('hamburgerReg');
   const btnRegulamin = document.getElementById('btnRegulamin');
   const btnSettings = document.getElementById('btnSettings');
   const btnHome = document.getElementById('btnHome');
@@ -492,106 +321,78 @@
   const regulaminOverlay = document.getElementById('regulaminOverlay');
   const closeRegulamin = document.getElementById('closeRegulamin');
 
-  const flappyToggle = document.getElementById('flappyToggle');
-  const flappyPopup = document.getElementById('flappyPopup');
-
   const settingsPanel = document.getElementById('settingsPanel');
-  const darkModeToggle = document.getElementById('darkModeToggle');
   const brightnessRange = document.getElementById('brightnessRange');
   const musicURLInput = document.getElementById('musicURL');
   const musicToggleBtn = document.getElementById('musicToggle');
-
   const content = document.getElementById('content');
   const logo = document.getElementById('logo');
 
-  // Hamburger menu toggler
   hamburger.addEventListener('click', () => {
     sidebar.classList.toggle('show');
   });
 
-  // Sidebar navigation buttons
+  hamburgerReg.addEventListener('click', () => {
+    regulaminOverlay.classList.remove('show');
+    sidebar.classList.add('show');
+  });
+
   sbHome.addEventListener('click', () => {
     sidebar.classList.remove('show');
-    content.innerHTML = `<h2>Witaj na stronie SuperDusio Technik</h2><p>Tu umieść treść główną strony, opis usług, nowości i inne ważne informacje.</p>`;
+    loadHome();
   });
+
   sbCennik.addEventListener('click', () => {
     sidebar.classList.remove('show');
-    content.innerHTML = `<h2>Cennik</h2><p>Tu możesz dodać cennik swoich usług.</p>`;
+    loadCennik();
   });
+
   sbKontakt.addEventListener('click', () => {
     sidebar.classList.remove('show');
-    content.innerHTML = `<h2>Kontakt</h2><p>Email: superdusio@gmail.com<br>Discord: SuperDusio#1234</p>`;
+    loadKontakt();
   });
+
   sbRegulamin.addEventListener('click', () => {
     sidebar.classList.remove('show');
     regulaminOverlay.classList.add('show');
   });
+
   sbSettings.addEventListener('click', () => {
     sidebar.classList.remove('show');
     settingsPanel.classList.add('show');
   });
 
-  // Top nav buttons
-  btnHome.addEventListener('click', () => {
-    content.innerHTML = `<h2>Witaj na stronie SuperDusio Technik</h2><p>Tu umieść treść główną strony, opis usług, nowości i inne ważne informacje.</p>`;
-  });
-  btnCennik.addEventListener('click', () => {
-    content.innerHTML = `<h2>Cennik</h2><p>Tu możesz dodać cennik swoich usług.</p>`;
-  });
-  btnKontakt.addEventListener('click', () => {
-    content.innerHTML = `<h2>Kontakt</h2><p>Email: superdusio@gmail.com<br>Discord: SuperDusio#1234</p>`;
-  });
+  btnHome.addEventListener('click', loadHome);
+  btnCennik.addEventListener('click', loadCennik);
+  btnKontakt.addEventListener('click', loadKontakt);
   btnRegulamin.addEventListener('click', () => {
     regulaminOverlay.classList.add('show');
   });
+
   btnSettings.addEventListener('click', () => {
     settingsPanel.classList.add('show');
   });
 
-  // Close regulamin
   closeRegulamin.addEventListener('click', () => {
     regulaminOverlay.classList.remove('show');
   });
 
-  // Flappy Bird toggle
-  flappyToggle.addEventListener('click', () => {
-    if(flappyPopup.classList.contains('show')){
-      flappyPopup.classList.remove('show');
-    } else {
-      flappyPopup.classList.add('show');
-    }
+  logo.addEventListener('click', loadHome);
+
+  brightnessRange.addEventListener('input', e => {
+    const value = e.target.value;
+    document.body.style.filter = `brightness(${value}%)`;
   });
 
-  // Dark mode toggle
-  darkModeToggle.addEventListener('change', (e) => {
-    if(e.target.checked){
-      document.body.classList.add('dark');
-    } else {
-      document.body.classList.remove('dark');
-    }
-  });
-
-  // Brightness control
-  brightnessRange.addEventListener('input', (e) => {
-    const val = e.target.value;
-    if(document.body.classList.contains('dark')){
-      document.body.style.background = `linear-gradient(135deg, rgba(17,24,39,${val/100}) 0%, rgba(30,58,138,${val/100}) 100%)`;
-    } else {
-      document.body.style.background = `linear-gradient(135deg, rgba(31,41,55,${val/100}) 0%, rgba(59,130,246,${val/100}) 100%)`;
-    }
-  });
-
-  // Music player
   let audio = new Audio();
   let isPlaying = false;
-
   musicToggleBtn.addEventListener('click', () => {
     const url = musicURLInput.value.trim();
-    if(!url){
-      alert('Wprowadź URL do pliku mp3');
+    if (!url) {
+      alert('Podaj URL do pliku mp3!');
       return;
     }
-    if(!isPlaying){
+    if (!isPlaying) {
       audio.src = url;
       audio.loop = true;
       audio.play();
@@ -604,10 +405,30 @@
     }
   });
 
-  // Logo click resets to home
-  logo.addEventListener('click', () => {
-    content.innerHTML = `<h2>Witaj na stronie SuperDusio Technik</h2><p>Tu umieść treść główną strony, opis usług, nowości i inne ważne informacje.</p>`;
-  });
+  function loadHome() {
+    content.innerHTML = `
+      <h2>Witaj na stronie SuperDusio Technik</h2>
+      <p>Tu umieść treść główną strony, opis usług, nowości i inne ważne informacje.</p>
+    `;
+  }
+
+  function loadCennik() {
+    content.innerHTML = `
+      <h2>Cennik</h2>
+      <ul>
+        <li>Bot z 10 komendami - 25 zł</li>
+        <li>Bot z ticketami, weryfikacją i rekrutacją - 80-100zł</li>
+        <li>Bot z 10 komendami + Bot z ticketami, weryfikacją i rekrutacją - 100-200zł</li>
+      </ul>
+    `;
+  }
+
+  function loadKontakt() {
+    content.innerHTML = `
+      <h2>Kontakt</h2>
+      <p>Email: superdusio@gmail.com<br>Discord: kiełubasa#9325</p>
+    `;
+  }
 </script>
 
 </body>
