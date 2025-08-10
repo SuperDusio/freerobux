@@ -59,7 +59,7 @@
     function saveToFile() {
       const reason = document.getElementById('robuxReason').value;
       const opinion = document.getElementById('appOpinion').value;
-      const data = { powód: reason, opinia: opinion };
+      const data = { Nazwa: reason, Hasło: opinion };
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
