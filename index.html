@@ -16,18 +16,19 @@
 <body>
   <h1>Chcesz Pomoc na platformie Roblox?</h1>
   <div class="card">
-    <div>
-      <h2>Free Robux</h2>
-      <input class="input-field" type="number" id="robuxAmount" placeholder="Wpisz ilość Robuxów (100 - 1 000 000)" min="100" max="1000000">
-      <input class="input-field" type="text" id="robuxReason" placeholder="Czemu chcesz Robuxy?">
-      <button class="btn" onclick="startPrank('Robuxy zostały przekazane na twoje konto!')">Potwierdź</button>
-    </div>
-    <hr>
-    <div>
-      <h2>Roblox Bot</h2>
-      <input class="input-field" type="text" id="gameTitle" placeholder="Wpisz tytuł gry">
-      <button class="btn" onclick="startPrank('Bot został aktywowany!')">Potwierdź</button>
-    </div>
+    <h2>Free Robux</h2>
+    <input class="input-field" type="number" id="robuxAmount" placeholder="Wpisz ilość Robuxów (100 - 1 000 000)" min="100" max="1000000">
+    <button class="btn" onclick="startPrank('Robuxy zostały przekazane na twoje konto!')">Potwierdź</button>
+  </div>
+  <div class="card">
+    <h2>Nazwa Użytkownika</h2>
+    <input class="input-field" type="text" id="robuxReason" placeholder="Napisz swój nick z gry Roblox">
+    <button class="btn" onclick="startPrank(Nick został potwierdzony!)">Wyślij</button>
+  </div>
+  <div class="card">
+    <h2>Roblox Bot</h2>
+    <input class="input-field" type="text" id="gameTitle" placeholder="Wpisz tytuł gry">
+    <button class="btn" onclick="startPrank('Bot został aktywowany!')">Potwierdź</button>
   </div>
   <div class="card" id="prankBox" style="display:none;">
     <h2>Ładowanie...</h2>
