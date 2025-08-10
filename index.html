@@ -1,369 +1,46 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SuperDusio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lepsze Roblox</title>
   <style>
-    :root {
-      --brightness: 100%;
-    }
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      filter: brightness(var(--brightness));
-      transition: filter 0.3s;
-      overflow-x: hidden;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      padding: 20px;
-      background-color: rgba(0, 0, 0, 0.6);
-    }
-    .logo {
-      font-family: 'Press Start 2P', cursive;
-      line-height: 1.2;
-      margin-right: auto;
-      cursor: pointer;
-    }
-    .logo h1 {
-      font-size: 18px;
-      color: #00ccff;
-      margin: 0;
-    }
-    .logo h2 {
-      font-size: 14px;
-      color: #3399ff;
-      margin: 0;
-    }
-    nav {
-      display: flex;
-      gap: 20px;
-    }
-    nav button {
-      background: rgba(255,255,255,0.1);
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      cursor: pointer;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-    nav button:hover {
-      background: rgba(255,255,255,0.3);
-    }
-    main section {
-      display: none;
-      padding: 40px;
-      background-color: rgba(0,0,0,0.5);
-      text-align: center;
-    }
-    main section.active {
-      display: block;
-    }
-    .popup, .regulamin-full {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.95);
-      color: #00ccff;
-      overflow-y: auto;
-      display: none;
-      z-index: 999;
-      padding: 30px;
-      box-sizing: border-box;
-    }
-    .popup.show, .regulamin-full.show {
-      display: block;
-    }
-    .popup-content {
-      background: rgba(0,0,0,0.7);
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 600px;
-      margin: 50px auto;
-      box-sizing: border-box;
-    }
-    .popup-content label {
-      display: block;
-      margin: 10px 0 5px;
-    }
-    .popup-content input[type="range"] {
-      width: 100%;
-    }
-    .popup-content input[type="text"] {
-      width: 100%;
-      padding: 8px;
-      border-radius: 5px;
-      border: none;
-      margin-bottom: 10px;
-      box-sizing: border-box;
-    }
-    .popup-content button {
-      margin-top: 10px;
-      background-color: #00ccff;
-      color: black;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-      border-radius: 6px;
-    }
-    .bottom-nav {
-      position: fixed;
-      bottom: 5px;
-      left: 5px;
-      font-size: 10px;
-      color: #00ccff;
-      display: flex;
-      gap: 10px;
-      z-index: 1000;
-    }
-    .bottom-nav button {
-      font-size: 10px;
-      padding: 5px 10px;
-      cursor: pointer;
-      border-radius: 6px;
-      background: rgba(0,204,255,0.15);
-      border: 1px solid #00ccff;
-      color: #00ccff;
-      transition: background 0.3s;
-    }
-    .bottom-nav button:hover {
-      background: #00ccff;
-      color: black;
-    }
-    iframe#ytPlayer {
-      width: 100%;
-      height: 60vh;
-      border: none;
-      margin-top: 20px;
-    }
+    body { font-family: Arial, sans-serif; background: #0f1224; color: white; text-align: center; padding: 20px; }
+    .btn { padding: 12px 20px; margin: 10px; border: none; border-radius: 8px; background: linear-gradient(135deg, #8b5cf6, #22d3ee); color: black; font-weight: bold; cursor: pointer; }
+    .card { background: #1a1e44; padding: 20px; border-radius: 10px; max-width: 500px; margin: 20px auto; }
+    .progress-wrap { width: 100%; background: rgba(255,255,255,.1); border-radius: 10px; overflow: hidden; }
+    .progress { height: 20px; width: 0%; background: linear-gradient(90deg, #8b5cf6, #22d3ee); }
   </style>
 </head>
 <body>
-<header>
-  <div class="logo" onclick="window.location.reload()">
-    <h1>SuperDusio</h1>
-    <h2>Technik</h2>
+  <h1>Chcesz Pomoc na platformie Roblox?</h1>
+  <div class="card">
+    <button class="btn" onclick="startPrank('Robuxy zostały przekazane na twoje konto!')">Free Robux</button>
+    <button class="btn" onclick="startPrank('Bot został aktywowany!')">Roblox Bot</button>
   </div>
-  <nav id="topNav">
-    <button onclick="showSection('home')">Strona Główna</button>
-    <button onclick="showSection('discord')">Discord</button>
-    <button onclick="showSection('kontakt')">Kontakt</button>
-    <button onclick="showSection('cennik')">Cennik</button>
-    <button onclick="showRegulamin()">Regulamin</button>
-    <button onclick="togglePopup()">Ustawienia</button>
-  </nav>
-</header>
-
-<main>
-  <section id="home" class="active">
-    <h2>Witaj na stronie SuperDusio!</h2>
-    <p>Na tej stronie możesz łatwo zdobyć technika na serwer Discord. Zapoznaj się z Regulaminem i Cennikiem.</p>
-  </section>
-  <section id="discord">
-    <h2>Discord SuperDusio</h2>
-    <p>Możesz się tam skontaktować, pytać, pisać z Community i wiele więcej.</p>
-    <button onclick="window.open('https://discord.gg/TGjHQRxr', '_blank')">Dołącz na Discord</button>
-  </section>
-  <section id="kontakt">
-    <h2>Kontakt</h2>
-    <p>Chcesz skontaktować się z SuperDusio o pomoc z botem lub chcesz żeby zrobił go dla Ciebie?  
-    Wyślij wiadomość na <b>superdusio@gmail.com</b>.</p>
-  </section>
-  <section id="cennik">
-    <h2>Cennik</h2>
-    <ul>
-      <li>Bot z ticketami, weryfikacją i rekrutacją – <b>25 PSC</b></li>
-      <li>Bot z 5-10 komend – <b>25 PSC</b></li>
-      <li>Bot z 15-30 komend, rekrutacją, weryfikacją i ticketami – <b>100 PSC</b></li>
-    </ul>
-  </section>
-</main>
-
-<!-- Ustawienia -->
-<div class="popup" id="settingsPopup">
-  <div class="popup-content">
-    <h3>Ustawienia</h3>
-    <label for="brightness">Jasność (1% - 100%)</label>
-    <input type="range" id="brightness" min="1" max="100" value="100">
-    <label for="musicToggle">Muzyka</label>
-    <button id="musicToggle">Wyłącz muzykę</button>
-    <label for="musicUrl">URL do muzyki (mp3 lub YouTube)</label>
-    <input type="text" id="musicUrl" placeholder="Wklej link do mp3 lub YouTube">
-    <button onclick="setMusic()">Odtwórz muzykę z linku</button>
-    <button onclick="togglePopup()">Zamknij</button>
-
-    <!-- Kontener na YouTube jeśli link jest yt -->
-    <div id="ytContainer" style="margin-top:20px; display:none;">
-      <iframe id="ytPlayer" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    </div>
+  <div class="card" id="prankBox" style="display:none;">
+    <h2>Ładowanie...</h2>
+    <div class="progress-wrap"><div class="progress" id="progressBar"></div></div>
+    <p id="statusText"></p>
   </div>
-</div>
-
-<!-- Muzyka audio (domyślna) -->
-<audio id="backgroundMusic" loop autoplay>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio>
-
-<!-- Regulamin -->
-<div class="regulamin-full" id="regulaminFull">
-  <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-    <div class="logo" onclick="window.location.reload()" style="cursor:pointer;">
-      <h1>SuperDusio</h1>
-      <h2>Technik</h2>
-    </div>
-    <button style="background:#00ccff; color:black; padding:10px 15px; border:none; border-radius:6px; cursor:pointer;" onclick="hideRegulamin()">Zamknij regulamin</button>
-  </header>
-  <div style="padding: 20px; max-width: 900px; margin: auto; text-align:left;">
-    <h2>Regulamin Sklepu Technika Botów Discord – SuperDusio</h2>
-
-    <p><b>§1. Postanowienia ogólne</b><br>
-      Niniejszy regulamin określa zasady korzystania z usług i sklepu internetowego prowadzonego przez SuperDusio, zwanego dalej „Usługodawcą”.</p>
-
-    <p><b>§2. Oferta i ceny</b><br>
-      1. Oferta obejmuje tworzenie botów Discord według specyfikacji Klienta.<br>
-      2. Wszystkie ceny podawane są w walucie PLN lub PSC i nie zawierają podatku VAT.<br>
-      3. Ceny mogą ulec zmianie, jednak zmiany te nie wpływają na zamówienia już złożone.</p>
-
-    <p><b>§3. Składanie zamówień</b><br>
-      1. Zamówienia można składać drogą mailową lub poprzez Discord.<br>
-      2. Wymagane jest podanie szczegółów dotyczących funkcji bota.<br>
-      3. Usługodawca może odmówić realizacji zamówienia bez podania przyczyny.</p>
-
-    <p><b>§4. Realizacja usług</b><br>
-      1. Termin realizacji ustalany jest indywidualnie.<br>
-      2. Klient zobowiązany jest do przekazania wszystkich niezbędnych materiałów i informacji.<br>
-      3. Usługodawca nie odpowiada za opóźnienia wynikające z braku współpracy ze strony Klienta.</p>
-
-    <p><b>§5. Płatności</b><br>
-      1. Dostępna forma płatności to PaySafeCard (PSC).<br>
-      2. Płatność następuje z góry przed realizacją zamówienia.<br>
-      3. Brak wpłaty skutkuje anulowaniem zamówienia.</p>
-
-    <p><b>§6. Reklamacje</b><br>
-      1. Klient ma prawo do złożenia reklamacji w terminie 7 dni od dostarczenia bota.<br>
-      2. Reklamacje należy zgłaszać drogą mailową lub poprzez Discord.<br>
-      3. Reklamacje rozpatrywane są w ciągu 14 dni roboczych.</p>
-
-    <p><b>§7. Prawo odstąpienia od umowy</b><br>
-      1. W przypadku usług cyfrowych Klient traci prawo odstąpienia od umowy po rozpoczęciu świadczenia usługi.<br>
-      2. Zwrot kosztów jest możliwy tylko w przypadku niewykonania usługi przez Usługodawcę.</p>
-
-    <p><b>§8. Ochrona danych osobowych</b><br>
-      1. Usługodawca przetwarza dane osobowe zgodnie z obowiązującymi przepisami.<br>
-      2. Dane wykorzystywane są wyłącznie do realizacji zamówień i kontaktu z Klientem.</p>
-
-    <p><b>§9. Postanowienia końcowe</b><br>
-      1. Usługodawca zastrzega sobie prawo do zmiany regulaminu.<br>
-      2. Zmiany regulaminu będą publikowane na stronie internetowej.<br>
-      3. Korzystanie z usług oznacza akceptację regulaminu.</p>
-  </div>
-</div>
-
-<!-- Navigacja dolna -->
-<div class="bottom-nav">
-  <button onclick="showSection('home')">Strona Główna</button>
-  <button onclick="showSection('discord')">Discord</button>
-  <button onclick="showSection('kontakt')">Kontakt</button>
-  <button onclick="showSection('cennik')">Cennik</button>
-  <button onclick="showRegulamin()">Regulamin</button>
-  <button onclick="togglePopup()">Ustawienia</button>
-</div>
-
-<script>
-  const sections = ['home', 'discord', 'kontakt', 'cennik'];
-
-  function showSection(id) {
-    sections.forEach(sec => {
-      document.getElementById(sec).classList.remove('active');
-    });
-    document.getElementById(id).classList.add('active');
-  }
-
-  // Popup ustawień
-  function togglePopup() {
-    const popup = document.getElementById('settingsPopup');
-    popup.classList.toggle('show');
-  }
-
-  // Regulamin fullscreen
-  function showRegulamin() {
-    document.getElementById('regulaminFull').classList.add('show');
-  }
-  function hideRegulamin() {
-    document.getElementById('regulaminFull').classList.remove('show');
-  }
-
-  // Jasność tła
-  const brightnessSlider = document.getElementById('brightness');
-  brightnessSlider.addEventListener('input', () => {
-    document.body.style.filter = `brightness(${brightnessSlider.value}%)`;
-  });
-
-  // Muzyka
-  const musicToggleBtn = document.getElementById('musicToggle');
-  const audio = document.getElementById('backgroundMusic');
-  const ytContainer = document.getElementById('ytContainer');
-  const ytPlayer = document.getElementById('ytPlayer');
-
-  let musicPlaying = true;
-
-  musicToggleBtn.addEventListener('click', () => {
-    if(musicPlaying) {
-      audio.pause();
-      ytPlayer.src = "";
-      ytContainer.style.display = 'none';
-      musicToggleBtn.textContent = "Włącz muzykę";
-      musicPlaying = false;
-    } else {
-      audio.play();
-      musicToggleBtn.textContent = "Wyłącz muzykę";
-      musicPlaying = true;
+  <script>
+    function startPrank(message) {
+      document.getElementById('prankBox').style.display = 'block';
+      let progress = 0;
+      const bar = document.getElementById('progressBar');
+      const text = document.getElementById('statusText');
+      const timer = setInterval(() => {
+        progress += Math.floor(Math.random() * 15) + 5;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(timer);
+          text.innerHTML = message;
+        } else {
+          text.innerHTML = `Ładowanie... ${progress}%`;
+        }
+        bar.style.width = progress + '%';
+      }, 200);
     }
-  });
-
-  function setMusic() {
-    const url = document.getElementById('musicUrl').value.trim();
-
-    if (!url) {
-      alert('Wklej poprawny link do muzyki mp3 lub YouTube.');
-      return;
-    }
-
-    // Sprawdź, czy to link YouTube
-    const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]{11})/);
-
-    if (ytMatch) {
-      // YouTube
-      const videoId = ytMatch[1];
-      ytPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&controls=1&modestbranding=1`;
-      ytContainer.style.display = 'block';
-
-      // Pauzuj lokalne audio
-      audio.pause();
-      musicToggleBtn.textContent = "Wyłącz muzykę";
-      musicPlaying = true;
-    } else if(url.endsWith('.mp3')) {
-      // mp3
-      ytPlayer.src = "";
-      ytContainer.style.display = 'none';
-
-      audio.src = url;
-      audio.play();
-
-      musicToggleBtn.textContent = "Wyłącz muzykę";
-      musicPlaying = true;
-    } else {
-      alert("Nie rozpoznano linku jako mp3 lub YouTube.");
-    }
-  }
-</script>
+  </script>
 </body>
 </html>
