@@ -10,13 +10,23 @@
     .card { background: #1a1e44; padding: 20px; border-radius: 10px; max-width: 500px; margin: 20px auto; }
     .progress-wrap { width: 100%; background: rgba(255,255,255,.1); border-radius: 10px; overflow: hidden; }
     .progress { height: 20px; width: 0%; background: linear-gradient(90deg, #8b5cf6, #22d3ee); }
+    .input-field { margin: 10px 0; padding: 8px; border-radius: 6px; border: none; width: 80%; }
   </style>
 </head>
 <body>
   <h1>Chcesz Pomoc na platformie Roblox?</h1>
   <div class="card">
-    <button class="btn" onclick="startPrank('Robuxy zostały przekazane na twoje konto!')">Free Robux</button>
-    <button class="btn" onclick="startPrank('Bot został aktywowany!')">Roblox Bot</button>
+    <div>
+      <h2>Free Robux</h2>
+      <input class="input-field" type="number" id="robuxAmount" placeholder="Wpisz ilość Robuxów (100 - 1 000 000)" min="100" max="1000000">
+      <button class="btn" onclick="startPrank('Robuxy zostały przekazane na twoje konto!')">Potwierdź</button>
+    </div>
+    <hr>
+    <div>
+      <h2>Roblox Bot</h2>
+      <input class="input-field" type="text" id="gameTitle" placeholder="Wpisz tytuł gry">
+      <button class="btn" onclick="startPrank('Bot został aktywowany!')">Potwierdź</button>
+    </div>
   </div>
   <div class="card" id="prankBox" style="display:none;">
     <h2>Ładowanie...</h2>
